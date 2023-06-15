@@ -21,6 +21,13 @@ function App() {
 }
 
 function Todos() {
+  const query = [
+    { id: 1, title: "hello world" },
+    { id: 2, title: "hello world" },
+    { id: 3, title: "hello world" },
+    { id: 4, title: "hello world" },
+  ];
+  const [data, setData] = useState(query);
   const queryClient = useQueryClient();
   const getTodos = () => {
     console.log("hello");
@@ -28,24 +35,30 @@ function Todos() {
   const postTodo = () => {
     console.log("world");
   };
-  const query = useQuery("todos", getTodos);
+  // const query = useQuery("todos", getTodos);
+
   const mutation = useMutation(postTodo, {
     onSuccess: () => {
       queryClient.invalidateQueries("todos");
     },
   });
+  let dataI = {};
 
   return (
     <div>
       <ul>
-        <For each={query}>{({ id, title }) => <li key={id}>{title}</li>}</For>
+        <For each={data}>{({ id, title }) => <li key={id}>{title}</li>}</For>
       </ul>
       <button
         onClick={() => {
-          mutation.mutate({
-            id: Date.now(),
-            title: "Hello",
-          });
+          dataI = [
+            ...data,
+            {
+              id: Date.now(),
+              title: "Hello",
+            },
+          ];
+          setData(dataI);
         }}
       >
         Add Todos
