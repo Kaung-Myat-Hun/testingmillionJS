@@ -22,8 +22,12 @@ function App() {
 
 function Todos() {
   const queryClient = useQueryClient();
-  const getTodos = () => {};
-  const postTodo = () => {};
+  const getTodos = () => {
+    console.log("hello");
+  };
+  const postTodo = () => {
+    console.log("world");
+  };
   const query = useQuery("todos", getTodos);
   const mutation = useMutation(postTodo, {
     onSuccess: () => {
@@ -34,9 +38,7 @@ function Todos() {
   return (
     <div>
       <ul>
-        <For each={query}>
-          {({ id, title }, index) => <li key={id}>{title}</li>}
-        </For>
+        <For each={query}>{({ id, title }) => <li key={id}>{title}</li>}</For>
       </ul>
       <button
         onClick={() => {
